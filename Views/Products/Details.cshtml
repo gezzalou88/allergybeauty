@@ -1,0 +1,50 @@
+﻿@model AllergicBeauty.Models.Product
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <table class="table">
+        <tr>
+            <th colspan="2">
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+        </tr>
+        
+        @if (Model.Files.Any(f => f.FileType == FileType.Avatar))
+        {
+            <tr>
+                <td colspan="2">
+                    <img src="~/File?id=@Model.Files.First(f => f.FileType == FileType.Avatar).FileId" alt="avatar" />
+                </td>
+            </tr>
+        }
+        <tr>
+
+            <td>
+                Category
+            </td>
+
+            <td>
+                @Html.DisplayFor(model => model.Category.Name)
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Recommended Retail Price
+            </td>
+
+            <td>
+                £@Html.DisplayFor(model => model.RRP)
+            </td>
+        </tr>
+
+    </table>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

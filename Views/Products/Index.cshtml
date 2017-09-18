@@ -1,0 +1,63 @@
+﻿@using Microsoft.AspNet.Identity.Owin
+@model IEnumerable<AllergicBeauty.Models.Product>
+
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+@if (Request.IsAuthenticated)
+{
+    <p>
+        @Html.ActionLink("Create New", "Create")
+    </p>
+}
+@foreach (var item in Model)
+{
+    if (item.Approved)
+    {
+        <table class="table">
+            <tr>
+                <th colspan="2">
+                    @Html.DisplayFor(modelItem => item.Name)
+                </th>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <img src="~/File?id=@item.Files.First(f => f.FileType == FileType.Avatar).FileId" alt="avatar"/>
+                </td>
+            </tr>
+            <tr>
+                <td>Category:</td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Category.Name)
+                </td>
+            </tr>
+            <tr>
+                <td>Recommended Retail price</td>
+                <td>
+                    £@Html.DisplayFor(modelItem => item.RRP)
+                </td>
+            </tr>
+            @if (Roles.IsUserInRole("admin"))
+            {
+                <tr>
+                    <td colspan="2">
+                        @Html.ActionLink("Edit", "Edit", new {id = item.ID}) |
+                        @Html.ActionLink("Details", "Details", new {id = item.ID}) |
+                        @Html.ActionLink("Delete", "Delete", new {id = item.ID})
+                    </td>
+                </tr>
+            }
+            <tr>
+                <td colspan="2">
+                    <a href="http://@Html.DisplayFor(modelItem => item.WebLink)" target="_blank" class="button">Buy</a>
+                </td>
+            </tr>
+        </table>
+    }
+}
+
+    
